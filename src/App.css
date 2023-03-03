@@ -6,7 +6,7 @@
 
 body {
     background-color: #165163;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 #root {
@@ -15,18 +15,8 @@ body {
 
 .container {
     height: 100%;
-    background-color: #282c34;
     display: flex;
     justify-content: start;
-}
-
-.gallery {
-    background-color: #359d81;
-    height: 100%;
-}
-
-.panel {
-    background-color: #285f6d;
 }
 
 /********** Large(Laptop) devices **********/
