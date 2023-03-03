@@ -12,6 +12,7 @@
 /build
 .idea
 creds.json
+temp.txt
 
 # misc
 .DS_Store
