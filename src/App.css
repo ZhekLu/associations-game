@@ -1,38 +1,58 @@
-.App {
-  text-align: center;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+    background-color: #165163;
+    height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#root {
+    height: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.container {
+    height: 100%;
+    background-color: #282c34;
+    display: flex;
+    justify-content: start;
 }
 
-.App-link {
-  color: #61dafb;
+.gallery {
+    background-color: #359d81;
+    height: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.panel {
+    background-color: #285f6d;
+}
+
+/********** Large(Laptop) devices **********/
+@media (min-width: 1280px) {
+    .container {
+        flex-direction: row;
+    }
+}
+
+/********** Medium devices **********/
+@media (min-width: 960px) and (max-width: 1279px) {
+    .container {
+        flex-direction: row;
+    }
+}
+
+/********** Small(Tablet) devices **********/
+@media (min-width: 600px) and (max-width: 959px) {
+    .container {
+        flex-direction: column-reverse;
+    }
+}
+
+/********** Extra-Small(Phone) devices **********/
+@media (min-width: 370px) and (max-width: 599px) {
+    .container {
+        flex-direction: column-reverse;
+    }
 }
