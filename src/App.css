@@ -14,9 +14,10 @@ body {
 }
 
 .container {
-    height: 100%;
+    min-height: 100vh;
     display: flex;
     justify-content: start;
+    align-items: center;
 }
 
 /********** Large(Laptop) devices **********/
@@ -37,12 +38,14 @@ body {
 @media (min-width: 600px) and (max-width: 959px) {
     .container {
         flex-direction: column-reverse;
+        justify-content: space-around;
     }
 }
 
 /********** Extra-Small(Phone) devices **********/
-@media (min-width: 370px) and (max-width: 599px) {
+@media (max-width: 599px) {
     .container {
         flex-direction: column-reverse;
+        justify-content: space-around;
     }
 }

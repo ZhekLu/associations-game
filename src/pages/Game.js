@@ -1,14 +1,13 @@
 import './Game.css';
 import React from 'react';
 import GameSet from '../components/GameSet';
+import GamePanel from '../components/GamePanel';
 
 export default function Game() {
   return (
     <main className='container'>
       <GameSet/>
-      <section className='panel col-lg-3 col-md-3 col-sm-12 col-xs-12'>
-                Panel
-      </section>
+      <GamePanel/>
     </main>
   );
 }
