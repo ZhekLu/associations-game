@@ -31,10 +31,6 @@
     padding: 15px 5px 10px;
 }
 
-.game-card:hover .card-image, .game-card:hover .card-content {
-    opacity: 0.3;
-}
-
 .card-cover {
     transition: 0.6s;
     transform-style: preserve-3d;
@@ -48,6 +44,22 @@
 .card-front {
     backface-visibility: hidden;
     z-index: 2;
+}
+
+.game-card:hover .card-front {
+    opacity: 0.3;
+}
+
+.card-image-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+}
+
+.game-card.crossed .card-image-placeholder {
+    opacity: 0.5;
 }
 
 .card-back {
