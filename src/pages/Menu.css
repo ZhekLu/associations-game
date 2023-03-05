@@ -1,0 +1,130 @@
+.page {
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    overflow: hidden;
+}
+
+.header img {
+    width: 100%;
+}
+
+.overlay {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.menu-body {
+    background-color: rgba(16, 164, 194, 0.3);
+    min-height: 70%;
+    border-radius: 25px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    overflow: scroll;
+}
+
+.menu-body h1 {
+    font-size: 2em;
+}
+
+.menu-body input {
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid #10a4c2;
+    border-radius: 25px;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    padding: 25px 0;
+    text-transform: uppercase;
+    margin: 20px 0;
+}
+
+.menu-body input:focus {
+    background-color: #172930;
+    outline: none;
+}
+
+.menu-button {
+    background-color: #10a4c2;
+    color: white;
+    padding: 25px 15px;
+    border-radius: 25px;
+    width: 80%;
+    margin: 20px 0;
+    font-size: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+}
+
+.menu-button:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.54);
+    background-color: #027087;
+}
+
+
+.select-set {
+    width: 80%;
+    max-height: 80%;
+    overflow: scroll;
+    margin: 20px 0;
+}
+
+.select-set-button {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    font-size: 30px;
+    padding: 25px 15px;
+    border-radius: 25px;
+    margin: 3px 0;
+    border: 2px solid #10a4c2;
+    cursor: pointer;
+}
+
+.select-set-button:hover {
+    background-color: #172930;
+}
+
+/********** Large(Laptop) devices **********/
+@media (min-width: 1280px) {
+    .menu-body {
+        max-height: 80%;
+    }
+}
+
+/********** Medium devices **********/
+@media (min-width: 960px) and (max-width: 1279px) {
+    .menu-body {
+        max-height: 80%;
+    }
+}
+
+/********** Small(Tablet) devices **********/
+@media (min-width: 600px) and (max-width: 959px) {
+}
+
+/********** Extra-Small(Phone) devices **********/
+@media (max-width: 599px) {
+}
