@@ -11,8 +11,9 @@
 # production
 /build
 .idea
-creds.json
-temp.txt
+creds.*
+temp.*
+*.env
 
 # misc
 .DS_Store

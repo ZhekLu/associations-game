@@ -33,7 +33,7 @@
 
 .menu-body {
     background-color: rgba(16, 164, 194, 0.3);
-    min-height: 70%;
+    min-height: 50%;
     border-radius: 25px;
     color: white;
     display: flex;
@@ -65,6 +65,10 @@
     outline: none;
 }
 
+.menu-body input:invalid {
+    border-color: brown;
+}
+
 .menu-button {
     background-color: #10a4c2;
     color: white;
@@ -83,6 +87,14 @@
     background-color: #027087;
 }
 
+.menu-button:disabled {
+    background-color: #027087;
+}
+
+.menu-button:disabled:hover {
+    box-shadow: none;
+    cursor: default;
+}
 
 .select-set {
     width: 80%;
