@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
+import {useNavigate} from 'react-router-dom';
+
 import './Menu.css';
 import GameID from '../consts/shema';
 import getGameSets from '../google/drive/set';
+import {GAME} from '../consts/urls';
+import {getNextGameId} from '../google/sheets/game';
 
 const SelectSet = ({onSetSelection}) => {
   const [gameSets, setGameSets] = useState([]);
@@ -39,6 +43,7 @@ const SelectOption = ({
   handleNewGameClick,
   handleJoinGameClick,
   handleGameIDChange,
+  disableJoinButton,
 }) => {
   return (<>
     <h1>Select option</h1>
@@ -51,7 +56,7 @@ const SelectOption = ({
     <button
       className='menu-button'
       onClick={handleJoinGameClick}
-      disabled={true}
+      disabled={disableJoinButton}
     > Join Game
     </button>
     <input
@@ -69,14 +74,17 @@ SelectOption.propTypes = {
   handleNewGameClick: PropTypes.func.isRequired,
   handleJoinGameClick: PropTypes.func.isRequired,
   handleGameIDChange: PropTypes.func.isRequired,
+  disableJoinButton: PropTypes.bool,
 };
 
 export default function Menu() {
+  const navigate = useNavigate();
   const [isNewGame, setIsNewGame] = useState(undefined);
-  const [gameID, setGameID] = useState(undefined);
-  const [gameSet, setGameSet] = useState(undefined);
+  const [gameID, setGameID] = useState('');
+  const [gameIDIsValid, setGameIDIsValid] = useState(false);
 
   const handleGameIDChange = (event) => {
+    setGameID(event.target.value);
     const validityState = event.target.validity;
     const isOnlyPatternInvalid = validityState.patternMismatch &&
             !validityState.tooLong &&
@@ -86,18 +94,24 @@ export default function Menu() {
             '',
     );
     if (validityState.valid) {
-      setGameID(event.target.value);
+      setGameIDIsValid(true);
     }
   };
   const handleNewGameClick = (event) => {
     setIsNewGame(true);
+    getNextGameId().then((data) => setGameID(data));
   };
   const handleJoinGameClick = (event) => {
     setIsNewGame(false);
+    navigate(GAME, {
+      state: {game: gameID, isNew: false},
+    });
   };
 
   const handleGameSetSelection = (selectedSet) => {
-    setGameSet(selectedSet);
+    navigate(GAME, {
+      state: {set: selectedSet.id, game: gameID, isNew: isNewGame},
+    });
   };
 
   return (
@@ -109,6 +123,7 @@ export default function Menu() {
                       handleGameIDChange={handleGameIDChange}
                       handleNewGameClick={handleNewGameClick}
                       handleJoinGameClick={handleJoinGameClick}
+                      disableJoinButton={!gameIDIsValid}
                     />}
       </section>
     </div>
