@@ -12,13 +12,33 @@ export default function GamePanel() {
   const {currentSelectedCard, setCurrentSelectedCard, userSelect, setUserSelect} = useContext(ProcessContext);
   const [currentImage, setCurrentImage] = useState('');
   const [currentImageLoading, setCurrentImageLoading] = useState(true);
+  useEffect(() => {
+    if (userSelect) {
+      const currentUserSelection = gameInfo.isCurrentUserOwner ?
+                gameInfo.select_1 :
+                gameInfo.select_2;
+      if (currentUserSelection) {
+        fetchImage(
+            gameSet,
+            currentUserSelection,
+            setCurrentImage,
+            setCurrentImageLoading,
+        );
+      }
+    }
+  }, [userSelect]);
 
   useEffect(() => {
     if (!userSelect) {
       if (!currentSelectedCard) {
         setCurrentImage('');
       } else {
-        fetchImage(gameSet, currentSelectedCard, setCurrentImage, setCurrentImageLoading);
+        fetchImage(
+            gameSet,
+            currentSelectedCard,
+            setCurrentImage,
+            setCurrentImageLoading,
+        );
       }
     }
   }, [currentSelectedCard]);
