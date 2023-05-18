@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {useNavigate} from 'react-router-dom';
 
 import './Menu.css';
 import GameID from '../consts/shema';
+import {GameContext} from '../context/GameContext';
+import {getUser} from '../google/auth/user';
 import getGameSets from '../google/drive/set';
-import {GAME} from '../consts/urls';
-import {getNextGameId} from '../google/sheets/game';
+import {addGame, getNextGameId} from '../google/sheets/game';
+import getGames from '../google/sheets/store';
+import Loading from './Loading';
+import Game from './Game';
 
 const SelectSet = ({onSetSelection}) => {
   const [gameSets, setGameSets] = useState([]);
@@ -77,14 +80,50 @@ SelectOption.propTypes = {
   disableJoinButton: PropTypes.bool,
 };
 
+const GameDoesNotExists = ({gameID, setReady}) => {
+  return (
+    <div className='overlay'>
+      <section className='menu-body col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+        <h1>Ooops</h1>
+        <p className='menu-body-text'>
+                    It seems like game &quot;{gameID}&quot; does not exist
+        </p>
+        <button
+          className='menu-button'
+          onClick={() => setReady(false)}
+        > Back to menu
+        </button>
+      </section>
+    </div>
+  );
+};
+
+GameDoesNotExists.propTypes = {
+  gameID: PropTypes.string.isRequired,
+  setReady: PropTypes.func.isRequired,
+};
+
 export default function Menu() {
-  const navigate = useNavigate();
-  const [isNewGame, setIsNewGame] = useState(undefined);
-  const [gameID, setGameID] = useState('');
+  const [gameCreated, setGameCreated] = useState(false);
   const [gameIDIsValid, setGameIDIsValid] = useState(false);
+  const [games, setGames] = useState({});
+  const [ready, setReady] = useState(false);
+
+  const {
+    gameID, setGameID,
+    gameSet, setGameSet,
+    gameInfo, setGameInfo,
+  } = useContext(GameContext);
+
+  const setIsNewGame = (value) => {
+    setGameInfo((prev) => ({
+      ...prev,
+      isNew: value,
+    }));
+  };
 
   const handleGameIDChange = (event) => {
-    setGameID(event.target.value);
+    setGameID(event.target.value.toUpperCase());
     const validityState = event.target.validity;
     const isOnlyPatternInvalid = validityState.patternMismatch &&
             !validityState.tooLong &&
@@ -103,21 +142,45 @@ export default function Menu() {
   };
   const handleJoinGameClick = (event) => {
     setIsNewGame(false);
-    navigate(GAME, {
-      state: {game: gameID, isNew: false},
+    getGames().then((data) => {
+      setGames(data);
     });
+    setReady(true);
   };
 
   const handleGameSetSelection = (selectedSet) => {
-    navigate(GAME, {
-      state: {set: selectedSet.id, game: gameID, isNew: isNewGame},
-    });
+    setGameSet(selectedSet);
+    setReady(true);
   };
+
+  useEffect(() => {
+    if (ready && gameInfo.isNew && !gameCreated) {
+      const user = getUser();
+      addGame(gameID, user.email, gameSet.id).then((added) => {
+        if (added) {
+          console.log('New game created!', gameID);
+          setGameCreated(true);
+        } else {
+          console.log('Game not added. Something went wrong');
+        }
+      });
+    }
+  }, [ready, gameInfo.isNew]);
+
+  if (ready) {
+    if (!games || (gameInfo.isNew && !gameCreated)) {
+      return <Loading/>;
+    }
+    if (gameInfo.isNew || games[gameID]) {
+      return <Game/>;
+    }
+    return <GameDoesNotExists gameID={gameID} setReady={setReady}/>;
+  }
 
   return (
     <div className='overlay'>
       <section className='menu-body col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-        {isNewGame ?
+        {gameInfo.isNew ?
                     <SelectSet onSetSelection={handleGameSetSelection}/> :
                     <SelectOption
                       handleGameIDChange={handleGameIDChange}
