@@ -3,7 +3,7 @@ import React, {createContext, useState} from 'react';
 export const GameContext = createContext({
   gameID: undefined,
   setGameID: undefined,
-  gameSet: {name: undefined, id: undefined},
+  gameSet: undefined,
   setGameSet: undefined,
   gameInfo: {
     user_1: undefined,
@@ -12,6 +12,7 @@ export const GameContext = createContext({
     select_2: undefined,
     isNew: undefined,
     isExists: undefined,
+    isCurrentUserOwner: undefined,
   },
   setGameInfo: undefined,
   gameIsReady: undefined,
@@ -20,7 +21,7 @@ export const GameContext = createContext({
 
 export const GameProvider = ({children}) => {
   const [gameID, setGameID] = useState(undefined);
-  const [gameSet, setGameSet] = useState({name: undefined, id: undefined});
+  const [gameSet, setGameSet] = useState(undefined);
   const [gameIsReady, setGameIsReady] = useState(false);
   const [gameInfo, setGameInfo] = useState({
     user_1: undefined,
@@ -29,6 +30,7 @@ export const GameProvider = ({children}) => {
     select_2: undefined,
     isNew: undefined,
     isExists: undefined,
+    isCurrentUserOwner: undefined,
   });
 
   const contextValue = {

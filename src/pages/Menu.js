@@ -108,6 +108,7 @@ export default function Menu() {
   const [gameIDIsValid, setGameIDIsValid] = useState(false);
   const [games, setGames] = useState({});
   const [ready, setReady] = useState(false);
+  const [gameIsLoaded, setGameIsLoaded] = useState(false);
 
   const {
     gameID, setGameID,
@@ -119,6 +120,7 @@ export default function Menu() {
     setGameInfo((prev) => ({
       ...prev,
       isNew: value,
+      isCurrentUserOwner: value,
     }));
   };
 
@@ -149,31 +151,58 @@ export default function Menu() {
   };
 
   const handleGameSetSelection = (selectedSet) => {
-    setGameSet(selectedSet);
+    setGameSet(selectedSet.id);
     setReady(true);
   };
 
   useEffect(() => {
     if (ready && gameInfo.isNew && !gameCreated) {
       const user = getUser();
-      addGame(gameID, user.email, gameSet.id).then((added) => {
+      addGame(gameID, user.email, gameSet).then((added) => {
         if (added) {
           console.log('New game created!', gameID);
           setGameCreated(true);
         } else {
-          console.log('Game not added. Something went wrong');
+          console.log('Game not added. Something went wrong...');
         }
       });
     }
   }, [ready, gameInfo.isNew]);
 
+  useEffect(() => {
+    if (games && games[gameID]) {
+      const game = games[gameID];
+      setGameSet(game.image_set);
+      setGameInfo((prev) => ({
+        ...prev,
+        isExists: true,
+        user_1: game.user_1,
+        user_2: game.user_2,
+        select_1: game.select_1,
+        select_2: game.select_2,
+      }));
+      setGameIsLoaded(true);
+    }
+  }, [games, ready]);
+
   if (ready) {
-    if (!games || (gameInfo.isNew && !gameCreated)) {
+    if (
+      (!gameInfo.isNew &&
+                (!games || !Object.keys(games).length || !gameIsLoaded)) ||
+            (gameInfo.isNew && !gameCreated)
+    ) {
       return <Loading/>;
     }
     if (gameInfo.isNew || games[gameID]) {
       return <Game/>;
     }
+    console.log('::not_found::',
+        {
+          'info': gameInfo,
+          'created': gameCreated,
+          'games': games, 'id': gameID,
+        },
+    );
     return <GameDoesNotExists gameID={gameID} setReady={setReady}/>;
   }
 
