@@ -1,29 +1,53 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
+
 import loadingImage from '../images/loading.jpg';
 import selectIcon from '../images/check-icon.png';
 import crossIcon from '../images/cross-icon.png';
 import removePlaceholder from '../images/cross-placeholder.png';
-import PropTypes from 'prop-types';
+import {ProcessContext} from '../context/ProcessContext';
+import {fetchImage} from '../services/images';
 
 export default function GameCard({gameID, setID, cardID, selectCard}) {
   const [image, setImage] = useState('');
   const [loading, setLoading] = useState(true);
+  const [isCrossed, setIsCrossed] = useState(false);
+  const {
+    userSelect,
+    currentSelectedCard,
+    setCurrentSelectedCard,
+  } = useContext(ProcessContext);
+
   useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const response = await import(`../gamesets/${setID}/img_${cardID}.jpg`);
-        setImage(response.default);
-      } catch (err) {
-        console.log('Error while loading picture:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchImage();
+    fetchImage(setID, cardID, setImage, setLoading);
   }, []);
 
+  const onCardClick = () => {
+    if (!userSelect) {
+      setCurrentSelectedCard((prev) => prev === cardID ? undefined : cardID);
+    }
+  };
+
+  const onCardSelectClick = () => {
+    setCurrentSelectedCard((prev) => prev === cardID ? undefined : cardID);
+    setIsCrossed(false);
+  };
+
+  const onCardCrossClick = () => {
+    setIsCrossed((prev) => !prev);
+    setCurrentSelectedCard((prev) => prev === cardID ? undefined : prev);
+  };
+
   return (
-    <article className='game-card col-lg-2 col-md-2 col-sm-2 col-xs-5'>
+    <article
+      className={
+        `game-card col-lg-2 col-md-2 col-sm-2 col-xs-5 
+        ${currentSelectedCard === cardID ? 'selected' : ''} 
+        ${isCrossed ? 'crossed' : ''}
+        `
+      }
+      onClick={onCardClick}
+    >
       <div className='card-cover'>
         <div className='card-front'>
           <img
@@ -36,14 +60,14 @@ export default function GameCard({gameID, setID, cardID, selectCard}) {
           />
           <h4 className='card-content'>Content</h4>
         </div>
-        <div className='card-back'>
-          <button className='icon-button'>
+        {userSelect && <div className='card-back'>
+          <button className='icon-button' onClick={onCardCrossClick}>
             <img src={crossIcon} alt='Remove card'/>
           </button>
-          <button className='icon-button' onClick={() => selectCard(cardID)}>
+          <button className='icon-button' onClick={onCardSelectClick}>
             <img src={selectIcon} alt='Select card'/>
           </button>
-        </div>
+        </div>}
       </div>
     </article>
   );
