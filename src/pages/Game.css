@@ -151,6 +151,15 @@
     border: none;
 }
 
+.icon-button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.icon-button:disabled img {
+    cursor: default;
+}
+
 /********** Large(Laptop) devices **********/
 @media (min-width: 1280px) {
 }
