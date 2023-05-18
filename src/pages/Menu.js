@@ -5,7 +5,7 @@ import './Menu.css';
 import GameID from '../consts/shema';
 import {GameContext} from '../context/GameContext';
 import {getUser} from '../google/auth/user';
-import getGameSets from '../google/drive/set';
+import {getGameSets} from '../google/drive/set';
 import {addGame, getNextGameId} from '../google/sheets/game';
 import getGames from '../google/sheets/store';
 import Loading from './Loading';
@@ -172,7 +172,7 @@ export default function Menu() {
   useEffect(() => {
     if (games && games[gameID]) {
       const game = games[gameID];
-      setGameSet(game.image_set);
+      setGameSet(Number(game.image_set));
       setGameInfo((prev) => ({
         ...prev,
         isExists: true,
@@ -188,7 +188,8 @@ export default function Menu() {
   if (ready) {
     if (
       (!gameInfo.isNew &&
-                (!games || !Object.keys(games).length || !gameIsLoaded)) ||
+                (!games || !Object.keys(games).length ||
+                    (games[gameID] && !gameIsLoaded))) ||
             (gameInfo.isNew && !gameCreated)
     ) {
       return <Loading/>;
