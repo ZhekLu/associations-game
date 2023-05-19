@@ -6,15 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
 import {AuthProvider} from './google/auth/AuthContext';
 import {GameProvider} from './context/GameContext';
+import {ProcessProvider} from './context/ProcessContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
       <AuthProvider>
         <GameProvider>
-          <BrowserRouter>
-            <App/>
-          </BrowserRouter>
+          <ProcessProvider>
+            <BrowserRouter>
+              <App/>
+            </BrowserRouter>
+          </ProcessProvider>
         </GameProvider>
       </AuthProvider>
     </React.StrictMode>,

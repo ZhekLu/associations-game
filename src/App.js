@@ -1,12 +1,8 @@
 import './App.css';
 import './grid.css';
 import React, {useContext, useEffect} from 'react';
-import {Route, Routes} from 'react-router-dom';
-import * as url from './consts/urls';
-import Game from './pages/Game';
 import Menu from './pages/Menu';
 import Login from './pages/Login';
-import Logout from './pages/Logout';
 import {AuthContext} from './google/auth/AuthContext';
 import loadGIS from './google/scripts/loadGIS';
 import initGISClient from './google/scripts/initGIS';

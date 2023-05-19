@@ -16,7 +16,7 @@ export default function initGISClient(
       expiresDate.setSeconds(
           expiresDate.getSeconds() + response.expires_in - 10,
       );
-      localStorage.setItem('user_expires', expiresDate.toString());
+      localStorage.setItem('user_expires', expiresDate.getTime().toString());
       callback(response.access_token);
     },
   }));

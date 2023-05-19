@@ -160,6 +160,11 @@
     cursor: default;
 }
 
+.game-result .menu-body {
+    background-color: rgba(16, 164, 194, 0);
+    width: 100%;
+}
+
 /********** Large(Laptop) devices **********/
 @media (min-width: 1280px) {
 }

@@ -9,7 +9,14 @@ import {fetchImage} from '../services/images';
 
 export default function GamePanel() {
   const {gameID, gameSet, gameInfo, setGameInfo} = useContext(GameContext);
-  const {currentSelectedCard, setCurrentSelectedCard, userSelect, setUserSelect} = useContext(ProcessContext);
+  const {
+    currentSelectedCard,
+    setCurrentSelectedCard,
+    userSelect,
+    setUserSelect,
+    userVoice,
+    setUserVoice,
+  } = useContext(ProcessContext);
   const [currentImage, setCurrentImage] = useState('');
   const [currentImageLoading, setCurrentImageLoading] = useState(true);
   useEffect(() => {
@@ -58,7 +65,7 @@ export default function GamePanel() {
       setUserSelect(true);
       setCurrentSelectedCard(undefined);
     } else {
-      // todo! check if win
+      setUserVoice(currentSelectedCard);
     }
   };
 
@@ -89,7 +96,7 @@ export default function GamePanel() {
         </button>
         <button
           className='icon-button'
-          disabled={!currentSelectedCard}
+          disabled={!currentSelectedCard || userVoice}
           onClick={onSelectClicked}>
           <img src={selectIcon} alt='select'/>
         </button>

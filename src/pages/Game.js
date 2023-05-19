@@ -7,6 +7,7 @@ import {ProcessContext} from '../context/ProcessContext';
 import {WaitingComponent} from './Waiting';
 import {updateGame} from '../google/sheets/game';
 import {getUser} from '../google/auth/user';
+import GameResult from '../components/GameResult';
 
 export default function Game() {
   const {gameID, gameSet, gameInfo, setGameInfo} = useContext(GameContext);
@@ -15,8 +16,13 @@ export default function Game() {
     opponentSelect,
     setUserSelect,
     setOpponentSelect,
+    userVoice,
   } = useContext(ProcessContext);
+
   const [isRecovered, setIsRecovered] = useState(undefined);
+  const [gameResult, setGameResult] = useState(
+      {ended: false, win: undefined},
+  );
 
   useEffect(() => {
     const userSelectIsSet =
@@ -46,10 +52,21 @@ export default function Game() {
     }
   }, [userSelect, isRecovered]);
 
+  useEffect(() => {
+    // check if user is won
+    if (userVoice) {
+      const opponentChoice = Number(gameInfo.isCurrentUserOwner ?
+                gameInfo.select_2 :
+                gameInfo.select_1);
+      console.log('Check win', gameInfo, opponentChoice, userVoice);
+      setGameResult({ended: true, win: userVoice === opponentChoice});
+    }
+  }, [userVoice]);
+
   return (
     <main className='container'>
       {userSelect && !opponentSelect && <WaitingComponent/>}
-      <GameSet/>
+      {gameResult.ended ? <GameResult isWin={gameResult.win}/> : <GameSet/>}
       <GamePanel/>
     </main>
   );

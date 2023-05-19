@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useContext, useState} from 'react';
 
 export const GameContext = createContext({
   gameID: undefined,
@@ -43,4 +43,19 @@ export const GameProvider = ({children}) => {
   return <GameContext.Provider value={contextValue}>
     {children}
   </GameContext.Provider>;
+};
+
+export const dropGameFromContext = (setGameID, setGameSet, setGameInfo, setGameIsReady) => {
+  setGameID(undefined);
+  setGameSet(undefined);
+  setGameInfo({
+    user_1: undefined,
+    user_2: undefined,
+    select_1: undefined,
+    select_2: undefined,
+    isNew: undefined,
+    isExists: undefined,
+    isCurrentUserOwner: undefined,
+  });
+  setGameIsReady(undefined);
 };

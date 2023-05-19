@@ -107,13 +107,13 @@ export default function Menu() {
   const [gameCreated, setGameCreated] = useState(false);
   const [gameIDIsValid, setGameIDIsValid] = useState(false);
   const [games, setGames] = useState({});
-  const [ready, setReady] = useState(false);
   const [gameIsLoaded, setGameIsLoaded] = useState(false);
 
   const {
     gameID, setGameID,
     gameSet, setGameSet,
     gameInfo, setGameInfo,
+    gameIsReady, setGameIsReady,
   } = useContext(GameContext);
 
   const setIsNewGame = (value) => {
@@ -147,7 +147,7 @@ export default function Menu() {
     getGames().then((data) => {
       setGames(data);
     });
-    setReady(true);
+    setGameIsReady(true);
   };
 
   const handleGameSetSelection = (selectedSet) => {
@@ -156,11 +156,11 @@ export default function Menu() {
       ...prev,
       user_1: getUser().email,
     }));
-    setReady(true);
+    setGameIsReady(true);
   };
 
   useEffect(() => {
-    if (ready && gameInfo.isNew && !gameCreated) {
+    if (gameIsReady && gameInfo.isNew && !gameCreated) {
       const user = getUser();
       addGame(gameID, user.email, gameSet).then((added) => {
         if (added) {
@@ -171,7 +171,7 @@ export default function Menu() {
         }
       });
     }
-  }, [ready, gameInfo.isNew]);
+  }, [gameIsReady, gameInfo.isNew]);
 
   useEffect(() => {
     if (games && games[gameID]) {
@@ -187,9 +187,9 @@ export default function Menu() {
       }));
       setGameIsLoaded(true);
     }
-  }, [games, ready]);
+  }, [games, gameIsReady]);
 
-  if (ready) {
+  if (gameIsReady) {
     if (
       (!gameInfo.isNew &&
                 (!games || !Object.keys(games).length ||
@@ -208,7 +208,7 @@ export default function Menu() {
           'games': games, 'id': gameID,
         },
     );
-    return <GameDoesNotExists gameID={gameID} setReady={setReady}/>;
+    return <GameDoesNotExists gameID={gameID} setReady={setGameIsReady}/>;
   }
 
   return (
