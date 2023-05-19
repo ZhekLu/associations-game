@@ -1,0 +1,196 @@
+.gallery {
+    max-height: 100vh;
+    overflow: scroll;
+    padding-top: 10px;
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-self: stretch;
+}
+
+.logo {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 25px;
+    overflow: hidden;
+    margin: 5px;
+    border: none;
+    background: none;
+    display: flex;
+    cursor: pointer;
+}
+
+.logo:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.54);
+}
+
+.logo img {
+    width: 100%;
+}
+
+.game-code {
+    background-color: #10a4c2;
+    border-radius: 25px;
+    padding: 15px 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    font-size: 3vw;
+    cursor: text;
+}
+
+.panel-buttons {
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-buttons button {
+    width: 40%;
+}
+
+.panel-buttons img {
+    width: 100%;
+    cursor: pointer;
+}
+
+.panel-buttons img:hover {
+    width: 95%;
+}
+
+.game-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border-radius: 25px;
+    overflow: hidden;
+    margin: 5px;
+    perspective: 800px;
+}
+
+.game-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.54);
+}
+
+.game-card.selected {
+    background-color: #10a4c2;
+}
+
+.card-image {
+    border-radius: 25px;
+    width: 100%;
+    transition: .5s ease;
+}
+
+.card-content {
+    color: white;
+    padding: 15px 5px 10px;
+    text-align: center;
+}
+
+.card-cover {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.game-card:hover .card-cover {
+    transform: rotateY(180deg);
+}
+
+.card-front {
+    backface-visibility: hidden;
+    z-index: 2;
+}
+
+.game-card:hover .card-front {
+    opacity: 0.3;
+}
+
+.card-image-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+}
+
+.game-card.crossed .card-image-placeholder {
+    opacity: 0.5;
+}
+
+.card-back {
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-back button img {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.card-back button img:hover {
+    opacity: 0.4;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+}
+
+.icon-button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.icon-button:disabled img {
+    cursor: default;
+}
+
+.game-result .menu-body {
+    background-color: rgba(16, 164, 194, 0);
+    width: 100%;
+}
+
+/********** Large(Laptop) devices **********/
+@media (min-width: 1280px) {
+}
+
+/********** Medium devices **********/
+@media (min-width: 960px) and (max-width: 1279px) {
+}
+
+/********** Small(Tablet) devices **********/
+@media (min-width: 600px) and (max-width: 959px) {
+    .panel .game-card .card-content {
+        display: none;
+    }
+
+    .panel {
+        flex-direction: row-reverse;
+    }
+}
+
+/********** Extra-Small(Phone) devices **********/
+@media (max-width: 599px) {
+    .panel .game-card {
+        display: none;
+    }
+
+    .panel {
+        flex-direction: row-reverse;
+    }
+}
