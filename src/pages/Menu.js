@@ -152,6 +152,10 @@ export default function Menu() {
 
   const handleGameSetSelection = (selectedSet) => {
     setGameSet(selectedSet.id);
+    setGameInfo((prev) => ({
+      ...prev,
+      user_1: getUser().email,
+    }));
     setReady(true);
   };
 
