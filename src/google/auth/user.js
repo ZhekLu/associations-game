@@ -19,3 +19,9 @@ export function isUserAuth() {
   }
   return expires > Date.now();
 }
+
+export function logout() {
+  localStorage.removeItem('user_token');
+  localStorage.removeItem('user_expires');
+  window.location.reload();
+}

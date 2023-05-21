@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './Menu.css';
 import GameID from '../consts/shema';
 import {GameContext} from '../context/GameContext';
-import {getUser} from '../google/auth/user';
+import {getUser, logout} from '../google/auth/user';
 import {getGameSets} from '../google/drive/set';
 import {addGame, getNextGameId} from '../google/sheets/game';
 import getGames from '../google/sheets/store';
@@ -71,6 +71,10 @@ const SelectOption = ({
       maxLength={GameID.maxLength}
       size={5}
     />
+    <button className='menu-button'
+      onClick={logout}
+    > Logout
+    </button>
   </>);
 };
 
