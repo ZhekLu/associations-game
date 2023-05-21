@@ -141,7 +141,7 @@
 .select-set {
     width: 80%;
     max-height: 80%;
-    overflow: scroll;
+    overflow: auto;
     margin: 20px 0;
 }
 

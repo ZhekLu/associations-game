@@ -69,6 +69,7 @@ const SelectOption = ({
       pattern={GameID.pattern}
       minLength={GameID.minLength}
       maxLength={GameID.maxLength}
+      size={5}
     />
   </>);
 };
