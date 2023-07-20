@@ -181,6 +181,7 @@ export default function Menu() {
   useEffect(() => {
     if (games && games[gameID]) {
       const game = games[gameID];
+      const user = getUser();
       setGameSet(Number(game.image_set));
       setGameInfo((prev) => ({
         ...prev,
@@ -189,6 +190,7 @@ export default function Menu() {
         user_2: game.user_2,
         select_1: game.select_1,
         select_2: game.select_2,
+        isCurrentUserOwner: user.email === game.user_1,
       }));
       setGameIsLoaded(true);
     }

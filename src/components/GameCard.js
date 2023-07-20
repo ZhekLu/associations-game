@@ -7,11 +7,14 @@ import crossIcon from '../images/cross-icon.png';
 import removePlaceholder from '../images/cross-placeholder.png';
 import {ProcessContext} from '../context/ProcessContext';
 import {fetchImage} from '../services/images';
+import {getCardDescription} from '../google/drive/set';
 
 export default function GameCard({gameID, setID, cardID, selectCard}) {
   const [image, setImage] = useState('');
   const [loading, setLoading] = useState(true);
   const [isCrossed, setIsCrossed] = useState(false);
+  const cardContent = getCardDescription(setID, cardID);
+
   const {
     userSelect,
     currentSelectedCard,
@@ -58,7 +61,9 @@ export default function GameCard({gameID, setID, cardID, selectCard}) {
           <img className='card-image-placeholder'
             src={removePlaceholder} alt='cross'
           />
-          <h4 className='card-content'>Content</h4>
+          <h4 className='card-content'>
+            {cardContent?.name ? cardContent.name : 'Content'}
+          </h4>
         </div>
         {userSelect && <div className='card-back'>
           <button className='icon-button' onClick={onCardCrossClick}>
