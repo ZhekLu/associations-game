@@ -1,7 +1,7 @@
 export async function getGameSets() {
   return [
     {'id': 1, 'name': 'Смешурики'},
-    {'id': 2, 'name': 'Shrek'},
+    {'id': 2, 'name': 'Shryk'},
     {'id': 3, 'name': 'Karazina Life'},
     {'id': 4, 'name': 'Disney'},
   ];
