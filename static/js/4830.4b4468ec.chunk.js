@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkassociations_game=self.webpackChunkassociations_game||[]).push([[4830],{4830:function(s,a,e){s.exports=e.p+"static/media/img_13.eb5b8d0432b60b34017b.jpg"}}]);
